@@ -39,7 +39,7 @@ public class RentalSystem {
 	    saveVehicle(vehicle);
 	    return true;
 	}
-
+//add customer
 	public boolean addCustomer(Customer customer) {
 	    if (findCustomerById(customer.getCustomerId()) != null) {
 	        System.out.println("Customer with this ID already exists.");
