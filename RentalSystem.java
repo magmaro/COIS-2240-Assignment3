@@ -31,6 +31,7 @@ public class RentalSystem {
 
     public void addCustomer(Customer customer) {
         customers.add(customer);
+        saveCustomer(customer);
     }
 
     public void rentVehicle(Vehicle vehicle, Customer customer, LocalDate date, double amount) {
@@ -67,6 +68,17 @@ public class RentalSystem {
             );
         } catch (IOException e) {
             System.out.println("Error, couldn't save vehicle");
+        }
+    }
+    
+    private void saveCustomer(Customer customer) {
+        try (FileWriter cwriter = new FileWriter("customers.txt", true)) {
+            cwriter.write(
+                customer.getCustomerId() + "," +
+                customer.getCustomerName() + "\n"
+            );
+        } catch (IOException e) {
+            System.out.println("Error, couldn't save customer details");
         }
     }
     
