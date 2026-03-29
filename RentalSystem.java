@@ -1,6 +1,8 @@
 import java.util.List;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class RentalSystem {
 	
@@ -24,6 +26,7 @@ public class RentalSystem {
 
     public void addVehicle(Vehicle vehicle) {
         vehicles.add(vehicle);
+        saveVehicle(vehicle);
     }
 
     public void addCustomer(Customer customer) {
@@ -52,6 +55,21 @@ public class RentalSystem {
         }
     }    
 
+    
+    private void saveVehicle(Vehicle vehicle) {
+        try (FileWriter fwriter = new FileWriter("vehicles.txt", true)) {
+            fwriter.write(
+                vehicle.getLicensePlate() + "," +
+                vehicle.getMake() + "," +
+                vehicle.getModel() + "," +
+                vehicle.getYear() + "," +
+                vehicle.getStatus() + "\n"
+            );
+        } catch (IOException e) {
+            System.out.println("Error, couldn't save vehicle");
+        }
+    }
+    
     public void displayVehicles(Vehicle.VehicleStatus status) {
         if (status == null) {
             System.out.println("\n=== All Vehicles ===");
