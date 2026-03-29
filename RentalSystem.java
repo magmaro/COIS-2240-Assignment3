@@ -82,6 +82,36 @@ public class RentalSystem {
         }
     }
     
+    private void saveRecord(RentalRecord record) {
+        try (FileWriter rwriter = new FileWriter("rental_records.txt", true)) {
+            rwriter.write(
+                record.getRecordType() + "," +
+                record.getVehicle().getLicensePlate() + "," +
+                record.getCustomer().getCustomerName() + "," +
+                record.getRecordDate() + "," +
+                record.getTotalAmount() + "\n"
+            );
+        } catch (IOException e) {
+            System.out.println("Error, couldn't save rental record");
+        }
+    }
+
+    private void saveAllVehicles() {
+        try (FileWriter fwriter = new FileWriter("vehicles.txt")) {
+            for (Vehicle v : vehicles) {
+                fwriter.write(
+                    v.getLicensePlate() + "," +
+                    v.getMake() + "," +
+                    v.getModel() + "," +
+                    v.getYear() + "," +
+                    v.getStatus() + "\n"
+                );
+            }
+        } catch (IOException e) {
+            System.out.println("Error saving all vehicles");
+        }
+    }
+    
     public void displayVehicles(Vehicle.VehicleStatus status) {
         if (status == null) {
             System.out.println("\n=== All Vehicles ===");
