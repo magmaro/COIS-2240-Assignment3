@@ -239,6 +239,29 @@ public class RentalSystem {
             
         } catch (IOException e) {
         } 
+       
+     // Load rental records
+        try (BufferedReader reader = new BufferedReader(new FileReader("rental_records.txt"))) {
+            String line;
+            
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                
+                String type = parts[0];
+                String plate = parts[1];
+                int customerId = Integer.parseInt(parts[2]);
+                LocalDate date = LocalDate.parse(parts[3]);
+                double amount = Double.parseDouble(parts[4]);
+                
+                Vehicle v = findVehicleByPlate(plate);
+                Customer c = findCustomerById(customerId);
+                
+                RentalRecord record = new RentalRecord(v, c, date, amount, type);
+                rentalHistory.addRecord(record);
+            }
+            
+        } catch (IOException e) {
+        }
         
     }   
       
