@@ -3,6 +3,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.*;
 
 public class RentalSystem {
 	
@@ -13,8 +14,12 @@ public class RentalSystem {
 	private List<Customer> customers = new ArrayList<>();
 	private RentalHistory rentalHistory = new RentalHistory();
 	
+
+	
 	// Private constructor
-	private RentalSystem() {}
+	private RentalSystem() {
+		loadData();
+	}
 	
 	// Public accessor method
 	public static RentalSystem getInstance() {
@@ -193,4 +198,30 @@ public class RentalSystem {
                 return c;
         return null;
     }
+    private void loadData() {
+        
+        // Load vehicles
+        try (BufferedReader reader = new BufferedReader(new FileReader("vehicles.txt"))) {
+            String line;
+            
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                
+                String plate = parts[0];
+                String make = parts[1];
+                String model = parts[2];
+                int year = Integer.parseInt(parts[3]);
+                Vehicle.VehicleStatus status = Vehicle.VehicleStatus.valueOf(parts[4]);
+                
+                Vehicle v = new Car(make, model, year, 0);
+                v.setLicensePlate(plate);
+                v.setStatus(status);
+                
+                vehicles.add(v);
+            }
+            
+        } catch (IOException e) {
+        }
+    }   
+        
 }
