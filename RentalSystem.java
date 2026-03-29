@@ -29,15 +29,27 @@ public class RentalSystem {
 		return instance;
 	}
 
-    public void addVehicle(Vehicle vehicle) {
-        vehicles.add(vehicle);
-        saveVehicle(vehicle);
-    }
+	public boolean addVehicle(Vehicle vehicle) {
+	    if (findVehicleByPlate(vehicle.getLicensePlate()) != null) {
+	        System.out.println("Vehicle with this license plate already exists");
+	        return false;
+	    }
 
-    public void addCustomer(Customer customer) {
-        customers.add(customer);
-        saveCustomer(customer);
-    }
+	    vehicles.add(vehicle);
+	    saveVehicle(vehicle);
+	    return true;
+	}
+
+	public boolean addCustomer(Customer customer) {
+	    if (findCustomerById(customer.getCustomerId()) != null) {
+	        System.out.println("Customer with this ID already exists.");
+	        return false;
+	    }
+
+	    customers.add(customer);
+	    saveCustomer(customer);
+	    return true;
+	}
 
     public void rentVehicle(Vehicle vehicle, Customer customer, LocalDate date, double amount) {
         if (vehicle.getStatus() == Vehicle.VehicleStatus.Available) {
