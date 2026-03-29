@@ -222,6 +222,26 @@ public class RentalSystem {
             
         } catch (IOException e) {
         }
-    }   
         
+     // Load customers
+        try (BufferedReader reader = new BufferedReader(new FileReader("customers.txt"))) {
+            String line;
+            
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                
+                int id = Integer.parseInt(parts[0]);
+                String name = parts[1];
+                
+                Customer c = new Customer(id, name);
+                customers.add(c);
+            }
+            
+        } catch (IOException e) {
+        } 
+        
+    }   
+      
+    
+    
 }
